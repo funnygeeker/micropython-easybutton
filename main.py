@@ -1,19 +1,3 @@
-# micropython-easybutton
-利用中断和循环实现按钮状态的识别，可以在按钮按下时执行指定函数，适用于 micropython
-
-### 功能
-- 按钮按下后，每隔一段时间执行一次函数
-- 按钮长按后，松开时执行函数
-- 按钮按下时执行函数
-- 按钮松开时执行函数
-
-### 说明
-`./main.py` 为使用示例文件
-`./libs/easybutton.py` 为按钮库文件
-
-### 示例
-- 在本次示例中，按钮所在的引脚接按钮，按钮接的是 `GND`
-```python
 import time
 from machine import Pin
 from libs import EasyButton
@@ -37,4 +21,3 @@ b.set_up(test)  # 按钮松开时执行函数
 while True:
     print("---- running ----")
     time.sleep(1)
-```
