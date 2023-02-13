@@ -12,6 +12,7 @@
 `./libs/easybutton.py` 为按钮库文件
 
 ### 示例
+在本次示例中，按钮所在的引脚接的是 GND
 ```python
 import time
 from machine import Pin
@@ -22,7 +23,7 @@ from libs import EasyButton
 btn = Pin(2, Pin.IN, Pin.PULL_UP)
 b = EasyButton(btn)  # 还有更多参数可以设置，详见源码注释，如果有不规范的命名，请提交 PR，我们会修正
 
-# 定义函数，可以先定义也可以用匿名函数
+# 定义函数，可以先定义，也可以用匿名函数
 def test():
     print("up")
 
