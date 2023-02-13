@@ -54,19 +54,19 @@ class EasyButton:
 
     def _up(self):
         if self.__up:
-            self.__up(self)
+            self.__up()
 
     def _down(self):
         if self.__down:
-            self.__down(self)
+            self.__down()
 
     def _cycle(self):
         if self.__cycle:
-            self.__cycle(self)
+            self.__cycle()
 
     def _hold(self):
         if self.__hold:
-            self.__hold(self)
+            self.__hold()
 
     def set_up(self, func):
         """设置按钮松开时执行的函数"""
