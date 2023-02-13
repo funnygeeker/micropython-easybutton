@@ -12,6 +12,13 @@ class EasyButton:
         - License: MIT
     """
     def __init__(self, button: Pin, cycle_time: int = 500, hold_time: int = 1000, interval_time: int = 500):
+        """
+        Args:
+            button: 例如： `Pin(2, Pin.IN, Pin.PULL_UP)`
+            cycle_time: 按下的后的每个判断周期时长，单位：毫秒
+            hold_time: 按钮按下行为判定为长按的时间，单位：毫秒
+            interval_time: 两次按键的检测间隔时间，单位：毫秒
+        """
         self.__cycle_num = 1
         '周期函数执行次数'
         self.__interval = 0
@@ -23,7 +30,7 @@ class EasyButton:
         self.hold_time = hold_time
         '按钮按下行为判定为长按的时间，单位：毫秒'
         self.interval_time = interval_time
-        '两次按键的检测间隔时间'
+        '两次按键的检测间隔时间，单位：毫秒'
         self._start_time = 0
         '按钮被按下的开始时间，单位：毫秒'
         self.irq = self.button.irq(handler=self._detection, trigger=Pin.IRQ_FALLING)
@@ -36,6 +43,14 @@ class EasyButton:
         '按钮长按松开时执行的函数'
         self.__cycle = None
         '按钮按下时每个周期执行的函数'
+        self.up_state = True
+        '按钮松开时对应函数的启用状态'
+        self.down_state = True
+        '按钮按下时对应函数的启用状态'
+        self.hold_state = True
+        '按钮长按松开时对应函数的启用状态'
+        self.cycle_state = True
+        '按钮按下时每个周期对应函数的启用状态'
 
     def _detection(self, pin):
         if time.ticks_ms() > self._start_time + self.__interval + self.interval_time:  # 防止由按钮接触原因造成的双击现象
@@ -53,19 +68,19 @@ class EasyButton:
             self._up()  # 执行按钮被松开的函数
 
     def _up(self):
-        if self.__up:
+        if self.__up and self.up_state:
             self.__up()
 
     def _down(self):
-        if self.__down:
+        if self.__down and self.down_state:
             self.__down()
 
     def _cycle(self):
-        if self.__cycle:
+        if self.__cycle and self.cycle_state:
             self.__cycle()
 
     def _hold(self):
-        if self.__hold:
+        if self.__hold and self.hold_state:
             self.__hold()
 
     def set_up(self, func):
