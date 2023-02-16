@@ -4,6 +4,7 @@
 
 ### 功能
 - 按钮按下后，每隔一段时间执行一次函数
+- 按钮短按后，松开时执行函数
 - 按钮长按后，松开时执行函数
 - 按钮按下时执行函数
 - 按钮松开时执行函数
@@ -31,8 +32,9 @@ def test():
 
 
 b.set_down(lambda: print("down"))  # 按钮按下时执行函数
-b.set_hold(lambda: print("cycle"))  # 按钮按下后，每隔一段时间执行一次函数
-b.set_long(lambda: print("hold"))  # 按钮长按后，松开时执行函数
+b.set_hold(lambda: print("hold"))  # 按钮按下后，每隔一段时间执行一次函数
+b.set_short(lambda: print("short"))  # 按钮短按后，松开时执行函数
+b.set_long(lambda: print("long"))  # 按钮长按后，松开时执行函数
 b.set_up(test)  # 按钮松开时执行函数
 
 # 可以通过修改 xx_state 来启用或者禁用对应的函数，比如：
