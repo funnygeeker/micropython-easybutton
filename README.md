@@ -14,6 +14,7 @@
 
 ### 示例
 - 在本次示例中，按钮所在的引脚接按钮，按钮接的是 `GND`
+
 ```python
 import time
 from machine import Pin
@@ -30,8 +31,8 @@ def test():
 
 
 b.set_down(lambda: print("down"))  # 按钮按下时执行函数
-b.set_cycle(lambda: print("cycle"))  # 按钮按下后，每隔一段时间执行一次函数
-b.set_hold(lambda: print("hold"))  # 按钮长按后，松开时执行函数
+b.set_hold(lambda: print("cycle"))  # 按钮按下后，每隔一段时间执行一次函数
+b.set_long(lambda: print("hold"))  # 按钮长按后，松开时执行函数
 b.set_up(test)  # 按钮松开时执行函数
 
 # 可以通过修改 xx_state 来启用或者禁用对应的函数，比如：
