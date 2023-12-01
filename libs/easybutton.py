@@ -48,15 +48,15 @@ class EasyButton:
         '按钮按下时每隔一段时间执行的函数'
         self.__short = None
         '按钮短按松开时执行的函数'
-        self.up_state = True
+        self.up_func = True
         '按钮松开时对应函数的启用状态'
-        self.down_state = True
+        self.down_func = True
         '按钮按下时对应函数的启用状态'
-        self.long_state = True
+        self.long_func = True
         '按钮长按松开时对应函数的启用状态'
-        self.hold_state = True
+        self.hold_func = True
         '按钮按下时每隔一段时间对应函数的启用状态'
-        self.short_state = True
+        self.short_func = True
         '按钮短按松开时对应函数的启用状态'
 
     def _detection(self, pin):
@@ -79,23 +79,23 @@ class EasyButton:
             self.__end_time = time.ticks_ms()  # 获取当前被按下的开始时间
 
     def _up(self):
-        if self.__up and self.up_state:
+        if self.__up and self.up_func:
             self.__up()
 
     def _down(self):
-        if self.__down and self.down_state:
+        if self.__down and self.down_func:
             self.__down()
 
     def _hold(self):
-        if self.__hold and self.hold_state:
+        if self.__hold and self.hold_func:
             self.__hold()
 
     def _long(self):
-        if self.__long and self.long_state:
+        if self.__long and self.long_func:
             self.__long()
 
     def _short(self):
-        if self.__short and self.short_state:
+        if self.__short and self.short_func:
             self.__short()
 
     def set_up(self, func):
