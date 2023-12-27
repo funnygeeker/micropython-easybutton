@@ -1,6 +1,6 @@
 [English (英语)](./README.md)
 # micropython-easybutton
-- 使用用中断实现的多种按钮状态识别，按钮按下时执行指定函数，适用于 `micropython`
+- 使用中断实现的多种按钮状态识别，按钮按下时执行指定函数，适用于 `micropython`
 
 ### 功能
 - 按钮按下后，每隔一段时间执行一次函数
