@@ -1,6 +1,6 @@
 [简体中文 (Chinese)](./README.ZH-CN.md)
 # micropython-easybutton
-- Recognize button status using interrupts and loops, suitable for `micropython`
+- Implements various button state recognition using interrupts, executes specified functions when the button is pressed, suitable for `micropython`.
 
 ### Features
 - Execute a specified function at regular intervals after the button is pressed
@@ -11,7 +11,7 @@
 
 ### Notes
 - `./main.py` is the example file
-- `./libs/easybutton.py` is the button library file
+- `./lib/easybutton.py` is the button library file
 
 ### Example
 - In this example, the button is connected to a pin and the other end is connected to `GND`
@@ -19,26 +19,30 @@
 ```python
 import time
 from machine import Pin
-from libs.easybutton import EasyButton
+from lib.easybutton import EasyButton
 
 # Initialize the button
 btn = Pin(2, Pin.IN, Pin.PULL_UP)
-b = EasyButton(btn)  # There are more parameters you can set, see source code comments for details. If you find any naming inconsistencies, please submit a PR and we will correct them.
+# if there are any non-standard naming, please submit a PR, thanks.
+# 如果有不规范的命名，请提交 PR，谢谢
+b = EasyButton(btn)
 
-# Define functions, you can define them earlier or use anonymous functions later
+# Define functions, they can be defined first or later used as anonymous functions
+# 定义函数，可以先定义，也可以后续使用匿名函数
 def test():
     print("up")
 
-b.set_down(lambda: print("down"))  # Execute the function when the button is pressed
-b.set_hold(lambda: print("hold"))  # Execute the function at regular intervals after the button is pressed
-b.set_short(lambda: print("short"))  # Execute the function when the button is released after a short press
-b.set_long(lambda: print("long"))  # Execute the function when the button is released after a long press
-b.set_up(test)  # Execute the function when the button is released
+# Set trigger functions for the button
+b.down_func = lambda: print("down")  # Executed when the button is pressed  # 按钮按下时执行
+b.hold_func = lambda: print("hold")  # Executed at regular intervals after the button is pressed  # 按钮按下后，每隔一段时间执行一次
+b.short_funcs = lambda: print("short")  # Executed when the button is short pressed and released  # 按钮短按后，松开时执行
+b.long_func = lambda: print("long")  # Executed when the button is long pressed and released  # 按钮长按后，松开时执行
+b.up_func = test  # Executed when the button is released  # 按钮松开时执行函数
 
-# You can enable or disable corresponding functions by modifying xx_func, for example:
-b.up_func = False  # Disable the function executed when the button is released
-
-# Since interrupts are used, you can continue executing code later. The code execution will only pause when the button is pressed and resume when released.
+# Since an interrupt is used, the code can continue to execute, and it will only pause when the button is pressed.
+# 由于使用了中断，所以后续可以继续执行代码，只有在按钮被按下时才会暂停继续执行的代码，松开则恢复
+# This loop is not necessary, it's just for demonstration purposes. It's not necessary in actual use.
+# 这里的循环并不是必须，仅为演示使用，实际使用中并非必要
 while True:
     print("---- running ----")
     time.sleep(1)
