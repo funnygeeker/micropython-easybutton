@@ -7,6 +7,21 @@
 import time
 from machine import Pin
 
+def _call(func, *args):
+    """
+    调用函数并传递参数
+        如果 func 是可调用对象，则执行 func(*args)
+        如果 func 是元组且第一个元素为可调用对象，则执行 func[0](*(func[1] + args))
+
+    Args:
+        func: 函数或函数元组
+        *args: 传递给函数的参数
+    """
+    if callable(func):
+        func(*args)
+    elif type(func) is tuple and callable(func[0]):
+        in_args = func[1] if type(func[1]) is tuple or type(func[1]) is list else (func[1],)
+        func[0](*tuple(list(in_args) + list(args)))
 
 class EasyButton:
     def __init__(self, button: Pin, hold: int = 350, long: int = 1000, interval: int = 30):
@@ -65,21 +80,16 @@ class EasyButton:
             self.__end_time = time.ticks_ms()  # 获取当前被按下的开始时间 (Get the current start time of the button press)
 
     def _up(self):
-        if callable(self.up_func):
-            self.up_func()
+        _call(self.up_func)
 
     def _down(self):
-        if callable(self.down_func):
-            self.down_func()
+        _call(self.down_func)
 
     def _hold(self):
-        if callable(self.hold_func):
-            self.hold_func()
+        _call(self.hold_func)
 
     def _long(self):
-        if callable(self.long_func):
-            self.long_func()
+        _call(self.long_func)
 
     def _short(self):
-        if callable(self.short_func):
-            self.short_func()
+        _call(self.short_func)

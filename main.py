@@ -17,7 +17,7 @@ def test():
 b.down_func = lambda: print("down")  # Executed when the button is pressed  # 按钮按下时执行
 b.hold_func = lambda: print("hold")  # Executed at regular intervals after the button is pressed  # 按钮按下后，每隔一段时间执行一次
 b.short_func = lambda: print("short")  # Executed when the button is short pressed and released  # 按钮短按后，松开时执行
-b.long_func = lambda: print("long")  # Executed when the button is long pressed and released  # 按钮长按后，松开时执行
+b.long_func = (print, "long")  # Executed when the button is long pressed and released  # 按钮长按后，松开时执行
 b.up_func = test  # Executed when the button is released  # 按钮松开时执行函数
 
 # Since an interrupt is used, the code can continue to execute, and it will only pause when the button is pressed.
